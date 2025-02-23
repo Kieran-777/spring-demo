@@ -51,19 +51,19 @@ void loop() {
   {
     // Test for com
     char c = Serial.read();
-
-    if (c == '1') {
-      digitalWrite(LED_BUILTIN, 1); // open roof
-      Serial.print("on");
-      Serial.print("\n");
-      myServo.write(90);
-    }
-    else if (c == '0') {
+    if (c == '0') {
       digitalWrite(LED_BUILTIN, 0); // close roof
-      Serial.print("off");
+      Serial.print("closing roof");
       Serial.print("\n");
       myServo.write(0);
     }
+    else if (c == '1') {
+      digitalWrite(LED_BUILTIN, 1); // open roof
+      Serial.print("opening roof");
+      Serial.print("\n");
+      myServo.write(90);
+    }
+
     else if (c == '2') { // shower on
       digitalWrite(8, HIGH);
       Serial.print("shower on");
@@ -71,18 +71,24 @@ void loop() {
     }
     else if (c == '3') { // shower off
       digitalWrite(8, LOW);
+      Serial.print("shower off");
+      Serial.print("\n");
     }
     else if (c == '4') { // leds on
       for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = CRGB::Red;
       }
       FastLED.show();
+      Serial.print("leds on");
+      Serial.print("\n");
     }
     else if (c == '5') { // leds off
       for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = CRGB::Black;
       }
       FastLED.show();
+      Serial.print("leds off");
+      Serial.print("\n");
     }
     else if (c == 'c') { // change led color
       int r = Serial.parseInt();
@@ -91,6 +97,8 @@ void loop() {
 
       fill_solid(leds, NUM_LEDS, CRGB(r,g,b));
       FastLED.show();
+      Serial.print("leds on");
+      Serial.print("\n");
     }
   }
 }
